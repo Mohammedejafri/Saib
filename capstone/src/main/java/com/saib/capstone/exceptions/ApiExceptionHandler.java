@@ -1,103 +1,118 @@
-package com.saib.config;
+package com.saib.capstone.exceptions;
 
+import java.time.LocalDateTime;
 
-import org.springframework.http.HttpStatus;
-
-public class ApiSuccessPayload {
+public class ApiExceptionHandler {
 
 	private String message;
 	private int status;
 	private String httpStatus;
 	private boolean success;
 	private boolean exception;
-	private Object body;
+	private String path;
+	private LocalDateTime timestamp;
 	
-	public ApiSuccessPayload() {
+	
+	public ApiExceptionHandler() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ApiSuccessPayload(String message, int status, String httpStatus, boolean success, boolean exception,
-			Object body) {
+
+	public ApiExceptionHandler(String message, int status, String httpStatus, boolean success, boolean exception,
+			String path, LocalDateTime timestamp) {
 		super();
 		this.message = message;
 		this.status = status;
 		this.httpStatus = httpStatus;
 		this.success = success;
 		this.exception = exception;
-		this.body = body;
+		this.path = path;
+		this.timestamp = timestamp;
 	}
+
 
 	public String getMessage() {
 		return message;
 	}
 
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 
 	public int getStatus() {
 		return status;
 	}
 
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
 
 	public String getHttpStatus() {
 		return httpStatus;
 	}
 
+
 	public void setHttpStatus(String httpStatus) {
 		this.httpStatus = httpStatus;
 	}
+
 
 	public boolean isSuccess() {
 		return success;
 	}
 
+
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
+
 
 	public boolean isException() {
 		return exception;
 	}
 
+
 	public void setException(boolean exception) {
 		this.exception = exception;
 	}
 
-	public Object getBody() {
-		return body;
+
+	public String getPath() {
+		return path;
 	}
 
-	public void setBody(Object body) {
-		this.body = body;
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
-	@Override
-	public String toString() {
-		return "APISuccessPayload [message=" + message + ", status=" + status + ", httpStatus=" + httpStatus
-				+ ", success=" + success + ", exception=" + exception + ", body=" + body + "]";
+
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
 	}
 	
-	
-	public static ApiSuccessPayload build(Object body,String message,HttpStatus status)
+	public static String formatMessage(String message)
 	{
-		ApiSuccessPayload payload=new ApiSuccessPayload();
-		payload.setStatus(status.value());
-		payload.setMessage(message);
-		payload.setBody(body);
-		payload.setSuccess(true);
-		payload.setException(false);
-		payload.setHttpStatus(String.valueOf(status));
-		
-		return payload;
+		//"404 NOT_FOUND \"Account doesn't exist\"",
+		int indexOfDoubleQuotes=message.indexOf("\"");
+		message=message.substring(indexOfDoubleQuotes+1);
+		message=message.replace("\"","");
+		return message;
 	}
 	
 	
 	
 	
-
+	
+	
 }
