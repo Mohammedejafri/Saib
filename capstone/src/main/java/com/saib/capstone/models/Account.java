@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "account")
+
 public class Account {
 	@Id
 	@Column(name="account_number")
@@ -30,8 +31,8 @@ public class Account {
 	@Column(name="address")
 	private String address;
 	
-	@Column(name="account_type")
-	private String accountType;
+	@Column(name="accounttype")
+	private String accounttype;
 	
 	@Column(name="balance")
 	private double balance;
@@ -54,7 +55,7 @@ public class Account {
 	}
 
 	public Account(long accountNumber, String name, String gender, String email, String phone, String address,
-			String accountType, double balance, double creditLimit, LocalDateTime creationDate,
+			String accounttype, double balance, double creditLimit, LocalDateTime creationDate,
 			LocalDateTime lastUpdated, String status) {
 		super();
 		this.accountNumber = accountNumber;
@@ -63,7 +64,7 @@ public class Account {
 		this.email = email;
 		this.phone = phone;
 		this.address = address;
-		this.accountType = accountType;
+		this.accounttype = accounttype;
 		this.balance = balance;
 		this.creditLimit = creditLimit;
 		this.creationDate = creationDate;
@@ -120,11 +121,11 @@ public class Account {
 	}
 
 	public String getAccountType() {
-		return accountType;
+		return accounttype;
 	}
 
 	public void setAccountType(String accountType) {
-		this.accountType = accountType;
+		this.accounttype = accountType;
 	}
 
 	public double getBalance() {
@@ -170,7 +171,7 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account [accountNumber=" + accountNumber + ", name=" + name + ", gender=" + gender + ", email=" + email
-				+ ", phone=" + phone + ", address=" + address + ", accountType=" + accountType + ", balance=" + balance
+				+ ", phone=" + phone + ", address=" + address + ", accountType=" + accounttype + ", balance=" + balance
 				+ ", creditLimit=" + creditLimit + ", creationDate=" + creationDate + ", lastUpdated=" + lastUpdated
 				+ ", status=" + status + "]";
 	}
