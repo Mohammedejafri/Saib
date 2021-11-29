@@ -9,9 +9,10 @@ import com.saib.capstone.models.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account,Long>{
 
-	 List<Account> findByAccounttype(String type);
+	 List<Account> findAccountByaccountType(String type);
 	 List<Account> findByStatus(String status);
-	 
+	 List<Account> findByGender(String gender);
+
 	 
 	 
 }

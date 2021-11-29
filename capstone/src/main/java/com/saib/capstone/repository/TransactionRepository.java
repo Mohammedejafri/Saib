@@ -1,5 +1,6 @@
 package com.saib.capstone.repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import com.saib.capstone.models.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction,Long> {
 
-	List<Transaction> findByFromaccountname(String user );
-	List<Transaction> findByToaccountname(String user);
-	List<Transaction> findByDate(Date date);
+	List<Transaction> findTransactionByFromAccountName(String user );
+	List<Transaction> findTransactionByToAccountName(String user);
+	List<Transaction> findTransactionByDate(LocalDate date);
+	List<Transaction> findTransactionByOtherBank(String bankName);
+	List<Transaction> findTransactionByTransactionTypeAndDate(String type, LocalDate date);
 
 }

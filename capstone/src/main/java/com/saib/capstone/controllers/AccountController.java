@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.saib.capstone.config.ApiSuccessPayload;
 import com.saib.capstone.models.Account;
+import com.saib.capstone.models.Transaction;
 import com.saib.capstone.services.AccountService;
 import com.saib.util.Results;
 
@@ -37,9 +38,9 @@ public class AccountController {
 	
 	
 	@GetMapping("/accounts")
-	public ResponseEntity<ApiSuccessPayload> getAllAccounts()
+	public ResponseEntity<ApiSuccessPayload> getAllAccounts(int pageNumber , int pageSize)
 	{
-		List<Account> list=accountService.getAllAccount();
+		List<Account> list=accountService.getAllAccount(pageNumber, pageSize);
 		
 		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Accounts Fetched", HttpStatus.OK);
 		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
@@ -114,6 +115,20 @@ public class AccountController {
 		
 		return response;
 		   
+	}
+	
+	@GetMapping("/AccountByGender/{Gender}")
+	public ResponseEntity<ApiSuccessPayload> getAccountByGender(@PathVariable String Gender)
+	{
+
+		List<Account> list = accountService.getAccountByGender(Gender);
+		
+		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Accounts Fetched", HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
+		
+		return response;
+		   
+		
 	}
 	
 	

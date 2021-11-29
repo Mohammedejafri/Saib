@@ -31,8 +31,8 @@ public class Account {
 	@Column(name="address")
 	private String address;
 	
-	@Column(name="accounttype")
-	private String accounttype;
+	@Column(name="account_type")
+	private String accountType;
 	
 	@Column(name="balance")
 	private double balance;
@@ -55,7 +55,7 @@ public class Account {
 	}
 
 	public Account(long accountNumber, String name, String gender, String email, String phone, String address,
-			String accounttype, double balance, double creditLimit, LocalDateTime creationDate,
+			String accountType, double balance, double creditLimit, LocalDateTime creationDate,
 			LocalDateTime lastUpdated, String status) {
 		super();
 		this.accountNumber = accountNumber;
@@ -64,7 +64,7 @@ public class Account {
 		this.email = email;
 		this.phone = phone;
 		this.address = address;
-		this.accounttype = accounttype;
+		this.accountType = accountType;
 		this.balance = balance;
 		this.creditLimit = creditLimit;
 		this.creationDate = creationDate;
@@ -121,11 +121,11 @@ public class Account {
 	}
 
 	public String getAccountType() {
-		return accounttype;
+		return accountType;
 	}
 
 	public void setAccountType(String accountType) {
-		this.accounttype = accountType;
+		this.accountType = accountType;
 	}
 
 	public double getBalance() {
@@ -171,7 +171,7 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account [accountNumber=" + accountNumber + ", name=" + name + ", gender=" + gender + ", email=" + email
-				+ ", phone=" + phone + ", address=" + address + ", accountType=" + accounttype + ", balance=" + balance
+				+ ", phone=" + phone + ", address=" + address + ", accountType=" + accountType + ", balance=" + balance
 				+ ", creditLimit=" + creditLimit + ", creationDate=" + creationDate + ", lastUpdated=" + lastUpdated
 				+ ", status=" + status + "]";
 	}

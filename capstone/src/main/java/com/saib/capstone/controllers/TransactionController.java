@@ -1,6 +1,7 @@
 package com.saib.capstone.controllers;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +28,6 @@ public class TransactionController {
 	
 	@Autowired
 	TransactionService transactionService;
-	
-	public String getname () {
-		return "name : mohammed";
-	}
 	
 	@GetMapping("/transactions")
 	public ResponseEntity<ApiSuccessPayload> getAllTransaction()
@@ -86,7 +83,7 @@ public class TransactionController {
 	}
 	
 	@GetMapping("/transactionsDate/{date}")
-	public ResponseEntity<ApiSuccessPayload> getTransactionByDate(@PathVariable Date date)
+	public ResponseEntity<ApiSuccessPayload> getTransactionByDate(@PathVariable String date)
 	{
 
 		List<Transaction> list = transactionService.getTransactionByDate(date);
@@ -99,6 +96,54 @@ public class TransactionController {
 		
 	}
 	
+	@GetMapping("/transactionsByOtherBank/{bankName}")
+	public ResponseEntity<ApiSuccessPayload> getTransactionByOtherBank(@PathVariable String bankName)
+	{
+
+		List<Transaction> list = transactionService.getTransactionByOtherBank(bankName);
+		
+		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Accounts Fetched", HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
+		
+		return response;
+		   
+		
+	}
+	
+	@GetMapping("/transactionsByTypeAndDate/{type}/{date}")
+	public ResponseEntity<ApiSuccessPayload> getTransactionByOtherBank(@PathVariable String type ,@PathVariable String date )
+	{
+
+		List<Transaction> list = transactionService.getTransactionByTypeAndDatek(type , date);
+		
+		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Accounts Fetched", HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
+		
+		return response;
+		   
+		
+	}
+	
+
+	
+	
+	@PutMapping("/Transaction/{transaction_id}")
+	public ResponseEntity<ApiSuccessPayload> updateTransaction(@RequestBody Transaction transaction, @PathVariable long transaction_id)
+	{
+		String result=transactionService.updateTransaction(transaction, transaction_id);
+		ApiSuccessPayload payload=ApiSuccessPayload.build(result,result,HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
+		return response;
+	}
+	
+	@DeleteMapping("/Transaction/{transactionId}")
+	public ResponseEntity<ApiSuccessPayload> deleteTransaction(@PathVariable int transactionId)
+	{
+		String result = transactionService.deleteTransaction(transactionId);
+		ApiSuccessPayload payload=ApiSuccessPayload.build(result,result,HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
+		return response;
+	}
 	
 	
 

@@ -6,13 +6,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.saib.capstone.models.Account;
+import com.saib.capstone.models.Transaction;
 import com.saib.capstone.repository.AccountRepository;
 import com.saib.util.Results;
+
+import io.sentry.Sentry;
 
 @Service
 public class AccountService {
@@ -20,10 +26,19 @@ public class AccountService {
 	@Autowired
 	AccountRepository accountRepository;
 	
-	public List<Account> getAllAccount()
+	public List<Account> getAllAccount(Integer pageNo, Integer pageSize)
 	{
-		List<Account> list=accountRepository.findAll();
-		return list;
+		Pageable paging = PageRequest.of(pageNo, pageSize) ;
+		Page<Account> pageResult = accountRepository.findAll(paging);
+		
+		if(pageResult.hasContent()) {
+			return pageResult.getContent();
+
+		}
+		else {
+			return new ArrayList<Account>();
+
+		}
 	
 		
 	}
@@ -86,6 +101,7 @@ public class AccountService {
 			return result;
 		}
 		catch (Exception e) {
+			Sentry.captureException(e);
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
 		
@@ -103,9 +119,15 @@ public class AccountService {
 	public List<Account> getAccountsByType(String type) {
 		// TODO Auto-generated method stub
 		
-		List<Account> list = accountRepository.findByAccounttype(type);
+		List<Account> list = accountRepository.findAccountByaccountType(type);
 		return list;
 	
+	}
+
+	public List<Account> getAccountByGender(String gender) {
+		// TODO Auto-generated method stub
+		List<Account> list = accountRepository.findByGender(gender);
+		return list;
 	}
 	
 	

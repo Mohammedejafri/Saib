@@ -1,5 +1,6 @@
 package com.saib.capstone.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,8 +81,8 @@ public class TransactionService {
 	public List<Transaction> getUserTransactionByTransactionID(String User ) {
 		
 	
-			List<Transaction> list = transactionRepository.findByFromaccountname(User);
-			List<Transaction> list1 = transactionRepository.findByToaccountname(User);
+			List<Transaction> list = transactionRepository.findTransactionByFromAccountName(User);
+			List<Transaction> list1 = transactionRepository.findTransactionByToAccountName(User);
 
 			List<Transaction> list2 = new ArrayList<Transaction>();
 			list2.addAll(list);
@@ -92,10 +93,68 @@ public class TransactionService {
 		
 	}
 
-	public List<Transaction> getTransactionByDate(Date date) {
-		List<Transaction> list = transactionRepository.findByDate(date);	
+	public List<Transaction> getTransactionByDate(String date) {
+		List<Transaction> list = transactionRepository.findTransactionByDate(LocalDate.parse(date));	
 		return list;
 	}
+
+	
+	public String deleteTransaction(long transaction_id)
+	{
+		String result="";
+		try {
+		transactionRepository.deleteById(transaction_id);
+		
+		
+			result=Results.SUCCESS;
+			return result;
+		}
+		catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
+		
+		
+	}
+	
+	
+
+	public String updateTransaction(Transaction transaction, long transaction_id) {
+		// TODO Auto-generated method stub
+
+		String result="";
+		
+		transaction.setTransaction_id(transaction_id);
+		Transaction updatedtransaction = transactionRepository.save(transaction);
+		
+		if(updatedtransaction!=null)
+		{
+			result=Results.SUCCESS;
+		}
+		else
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record was not updated");
+		}
+		return result;
+	}
+
+
+
+	public List<Transaction> getTransactionByOtherBank(String bankName) {
+		
+		List<Transaction> list=transactionRepository.findTransactionByOtherBank(bankName);
+		return list;
+	
+	}
+
+	public List<Transaction> getTransactionByTypeAndDatek(String type, String date) {
+		// TODO Auto-generated method stub
+		List<Transaction> list=transactionRepository.findTransactionByTransactionTypeAndDate(type , LocalDate.parse(date));
+		return list;
+	}
+
+	
+	
+
 
 	
 
