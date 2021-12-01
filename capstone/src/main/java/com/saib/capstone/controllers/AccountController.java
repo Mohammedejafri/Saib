@@ -40,9 +40,21 @@ public class AccountController {
 	@GetMapping("/accounts")
 	public ResponseEntity<ApiSuccessPayload> getAllAccounts(int pageNumber , int pageSize)
 	{
-		List<Account> list=accountService.getAllAccount(pageNumber, pageSize);
+		List<Account> list=accountService.getAllAccountWithPage(pageNumber, pageSize);
 		
 		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Accounts Fetched", HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
+		
+		return response;
+		
+	}
+	
+	@GetMapping("/getAllAccount")
+	public ResponseEntity<ApiSuccessPayload> getAllAccount()
+	{
+		List<Account> list = accountService.getAllAccount();
+		
+		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Transaction Fetched", HttpStatus.OK);
 		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
 		
 		return response;

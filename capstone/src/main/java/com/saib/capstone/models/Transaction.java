@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "transaction")
 
@@ -32,7 +34,7 @@ public class Transaction {
 	private String toAccountName;
 	
 	@Column(name="same_bank_transaction")
-	private String sameBankTransaction;
+	private boolean sameBankTransaction;
 	
 	@Column(name="other_bank")
 	private String otherBank;
@@ -40,7 +42,8 @@ public class Transaction {
 	@Column(name="amount")
 	private double amount;
 	
-	@Column(name="date")
+	@Column(name = "date")
+	@ApiModelProperty(example="YYYY-MM-DD")
 	private LocalDate date ;
 	
 	@Column(name="time")
@@ -55,7 +58,7 @@ public class Transaction {
 	
 
 	public Transaction(int transaction_id, int fromAccount, int toAccount, String fromAccountName,
-			String toAccountName, String sameBankTransaction, String otherBank, double amount, LocalDate date,
+			String toAccountName, boolean sameBankTransaction, String otherBank, double amount, LocalDate date,
 			LocalDateTime time, String transactionType, String status) {
 		super();
 		this.transaction_id = transaction_id;
@@ -65,7 +68,7 @@ public class Transaction {
 		this.toAccountName = toAccountName;
 		this.sameBankTransaction = sameBankTransaction;
 		this.otherBank = otherBank;
-		this.amount = amount;
+		this.amount = 100.0;
 		this.date = date;
 		this.time = time;
 		this.transactionType = transactionType;
@@ -111,22 +114,22 @@ public class Transaction {
 	public void setToAccountName(String toAccountName) {
 		this.toAccountName = toAccountName;
 	}
-	public String getSameBankTransaction() {
+	public boolean getSameBankTransaction() {
 		return sameBankTransaction;
 	}
-	public void setSameBankTransaction(String sameBankTransaction) {
+	public void setSameBankTransaction(boolean sameBankTransaction) {
 		this.sameBankTransaction = sameBankTransaction;
 	}
 	public String getOtherBank() {
 		return otherBank;
 	}
-	public void setOther_bank(String otherBank) {
+	public void setOtherBank(String otherBank) {
 		this.otherBank = otherBank;
 	}
 	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
+	public void setAmount(double amount ) {
 		this.amount = amount;
 	}
 	public LocalDate getDate() {
@@ -144,7 +147,7 @@ public class Transaction {
 	public String getTransactionType() {
 		return transactionType;
 	}
-	public void setTransaction_type(String transactionType) {
+	public void settransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
 	public String getStatus() {

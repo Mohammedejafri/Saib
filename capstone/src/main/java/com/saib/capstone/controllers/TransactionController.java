@@ -2,10 +2,12 @@ package com.saib.capstone.controllers;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,6 +53,8 @@ public class TransactionController {
 		return response;
 	}
 	
+	
+	// this function will make transaction by getting the user account 
 	@PostMapping("/transactions")
 	public ResponseEntity<ApiSuccessPayload> MakeTransaction(@RequestBody Transaction transaction)
 	{
@@ -69,10 +73,10 @@ public class TransactionController {
 	
 
 	@GetMapping("/usertransactions/{User}")
-	public ResponseEntity<ApiSuccessPayload> getUserTransactionByTransactionID(@PathVariable String User)
+	public ResponseEntity<ApiSuccessPayload> getUserTransactionByUserName(@PathVariable String User)
 	{
 
-		List<Transaction> list = transactionService.getUserTransactionByTransactionID(User);
+		List<Transaction> list = transactionService.getUserTransactionByUserName(User);
 		
 		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Accounts Fetched", HttpStatus.OK);
 		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
@@ -83,7 +87,7 @@ public class TransactionController {
 	}
 	
 	@GetMapping("/transactionsDate/{date}")
-	public ResponseEntity<ApiSuccessPayload> getTransactionByDate(@PathVariable String date)
+	public ResponseEntity<ApiSuccessPayload> getTransactionByDate(@PathVariable @DateTimeFormat(pattern ="yyyy-MM-dd") LocalDate date )
 	{
 
 		List<Transaction> list = transactionService.getTransactionByDate(date);
@@ -111,10 +115,10 @@ public class TransactionController {
 	}
 	
 	@GetMapping("/transactionsByTypeAndDate/{type}/{date}")
-	public ResponseEntity<ApiSuccessPayload> getTransactionByOtherBank(@PathVariable String type ,@PathVariable String date )
+	public ResponseEntity<ApiSuccessPayload> getTransactionByOtherBank(@PathVariable String type ,@PathVariable @DateTimeFormat(pattern ="yyyy-MM-dd") LocalDate date )
 	{
 
-		List<Transaction> list = transactionService.getTransactionByTypeAndDatek(type , date);
+		List<Transaction> list = transactionService.getTransactionByTypeAndDate(type , date);
 		
 		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Accounts Fetched", HttpStatus.OK);
 		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);

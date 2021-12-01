@@ -26,7 +26,7 @@ public class AccountService {
 	@Autowired
 	AccountRepository accountRepository;
 	
-	public List<Account> getAllAccount(Integer pageNo, Integer pageSize)
+	public List<Account> getAllAccountWithPage(Integer pageNo, Integer pageSize)
 	{
 		Pageable paging = PageRequest.of(pageNo, pageSize) ;
 		Page<Account> pageResult = accountRepository.findAll(paging);
@@ -128,6 +128,14 @@ public class AccountService {
 		// TODO Auto-generated method stub
 		List<Account> list = accountRepository.findByGender(gender);
 		return list;
+	}
+	
+	public List<Account> getAllAccount()
+	{
+		List<Account> list=accountRepository.findAll();
+		return list;
+	
+		
 	}
 	
 	
